@@ -1,7 +1,7 @@
 // services/ContactService.js
 import axios from "axios";
 
-const API_URL = "https://driving-management-system.onrender.com/";
+const API_URL = "https://driving-management-system.onrender.com/api";
 
 class ContactService {
   async sendContactEmail(formData) {
