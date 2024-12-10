@@ -1,7 +1,7 @@
 // services/drivingCourse.service.js
 import axios from 'axios';
 
-const API_URL = process.env.REACT_APP_API_URL || 'https://driving-management-system.onrender.com/';
+const API_URL ='https://driving-management-system.onrender.com/';
 const getAuthHeader = () => ({
   'Authorization': `Bearer ${localStorage.getItem('token')}`,
   'Content-Type': 'multipart/form-data' 
