@@ -1,7 +1,7 @@
 // services/video.service.js
 import axios from 'axios';
 
-const API_URL = process.env.REACT_APP_API_URL || 'https://driving-management-system.onrender.com/';
+const API_URL = 'https://driving-management-system.onrender.com/api';
 
 const videoService = {
   uploadCourse: async (formData, config = {}) => {
