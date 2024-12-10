@@ -14,7 +14,7 @@ const app = express();
 
 // Configure CORS
 app.use(cors({
-    origin: process.env.FRONTEND_URL || 'https://cdl-onedrive-realty.vercel.app/',
+    origin: 'https://cdl-onedrive-realty.vercel.app/',
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true
