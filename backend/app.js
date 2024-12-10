@@ -8,13 +8,25 @@ const authRoutes = require('./routers/auth.routes');
 const drivingCourseRoutes = require('./routers/drivingCourse.routes');
 const miscellaneousRoutes = require('./routers/miscellaneous.routes');
 
-dotenv.config(); 
+dotenv.config();
 
 const app = express();
 
-// Configure CORS
+// Configure CORS with multiple origins
+const allowedOrigins = [
+    'http://localhost:3000', // Development frontend
+    'https://cdl-onedrive-realty.vercel.app' // Production frontend
+];
+
 app.use(cors({
-    origin: 'https://cdl-onedrive-realty.vercel.app/',
+    origin: (origin, callback) => {
+        // Allow requests with no origin (like mobile apps or Postman)
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true
@@ -40,15 +52,15 @@ app.use('/api', miscellaneousRoutes);
 // Error handling middleware
 app.use((err, req, res, next) => {
     console.error('Error:', err.stack);
-    
-    // Handle different types of errors
+
+    // Handle specific errors
     if (err.name === 'ValidationError') {
         return res.status(400).json({
             status: 'error',
             message: err.message
         });
     }
-    
+
     if (err.name === 'UnauthorizedError') {
         return res.status(401).json({
             status: 'error',
@@ -63,7 +75,7 @@ app.use((err, req, res, next) => {
         });
     }
 
-    // Default error
+    // Default error response
     res.status(err.status || 500).json({
         status: 'error',
         message: err.message || 'Internal server error'
@@ -77,17 +89,3 @@ app.listen(PORT, () => {
 });
 
 module.exports = app;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
